@@ -4,7 +4,7 @@ func _ready():
 	GameManager.register_player(self)
 	
 func _physics_process(delta):
-	
+	pass
 
 
 func get_input() -> Vector2:
