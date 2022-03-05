@@ -13,6 +13,10 @@ config_version=4
 config/name="Mini- Jam- 101"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameManager="*res://scripts/GameManager.gd"
+
 [display]
 
 window/size/width=320
