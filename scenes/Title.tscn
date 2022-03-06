@@ -34,7 +34,7 @@ script/source = "extends Camera2D
 
 func _input(event):
 	if(event is InputEventKey):
-		GameManager.load_scene(\"res://scenes/Testing environment.tscn\")
+		GameManager.load_scene(\"res://scenes/Level 1.tscn\")
 "
 
 [node name="Node2D" type="Node2D"]

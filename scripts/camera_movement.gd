@@ -6,8 +6,6 @@ export var follow_factor_y : float = 0.08
 
 onready var unrounded_position = position
 
-onready var windstate = false
-
 onready var shake_counter : int
 onready var shake_intensity : float
 onready var rng = RandomNumberGenerator.new()
@@ -21,14 +19,6 @@ func _ready():
 	GameManager.register_camera(self)
 
 func _process(_delta):
-	if(Input.is_key_pressed(KEY_Z) && !windstate):
-		windstate = true
-		$wind_right/AnimationPlayer.play("fade in")
-	elif(!Input.is_key_pressed(KEY_Z) && windstate):
-		windstate = false
-		$wind_right/AnimationPlayer.play("fade out")
-		
-	
 	unrounded_position.x += (GameManager.get_player_position().x - unrounded_position.x) * follow_factor_x
 	unrounded_position.y += (GameManager.get_player_position().y - unrounded_position.y) * follow_factor_y
 	

@@ -23,6 +23,7 @@ signal jump
 signal animate(input, velocity, grounded)
 
 
+onready var frozen : bool = false
 onready var velocity : Vector2 = Vector2()
 onready var grounded : bool = false
 
@@ -52,12 +53,15 @@ func _draw():
 	#draw_rect(Rect2(-shape.shape.extents, shape.shape.extents * 2), Color.aqua, false)
 	
 func _physics_process(_delta):
+	if(!frozen):
+		platforming_code()
+
+func platforming_code():
+	
+	apply_wind(GameManager.get_wind_value())
+	
 	var input : Vector2 = get_input()
 	
-	if(Input.is_key_pressed(KEY_Z)):
-		apply_wind(Vector2(21, 0))
-	
-		
 	count_frames()
 	
 	do_x_movement(input)

@@ -1,11 +1,18 @@
 extends Node
 
+
+
+signal wind_set
+
 # Holds references to important nodes in the game
 
 var current_scene = null
 
 var scene_file_path
 onready var transitioning = false
+
+var current_wind_orb
+var wind_status : Vector2 = Vector2()
 
 var player : Node2D
 var camera : Camera2D
@@ -25,18 +32,45 @@ func register_player(player_node : Node2D) -> void:
 func register_camera(camera_node : Camera2D) -> void:
 	camera = camera_node
 
+func freeze_player():
+	player.frozen = true
+	var sprite : AnimatedSprite = player.get_node("AnimatedSprite")
+	sprite.speed_scale = 0
+	sprite.modulate = Color(255,255,255)
+
+func unfreeze_player():
+	player.frozen = false
+	var sprite : AnimatedSprite = player.get_node("AnimatedSprite")
+	sprite.speed_scale = 1
+	sprite.modulate = Color(1,1,1)
+
+func get_wind_value() -> Vector2:
+	if(Input.is_action_pressed("wind")):
+		return wind_status
+	else:
+		return Vector2()
+
+func set_wind_value(new_direction : Vector2):
+	wind_status = new_direction
+	emit_signal("wind_set", wind_status)
+
 func load_scene(scene_path : String):
 	if(transitioning):
 		return
 	
 	var file_checker = File.new()
 	if(!file_checker.file_exists(scene_path)):
-		push_warning("unable to find file: " + scene_path)
+		push_warning("unable to find file: \"" + scene_path + "\"")
 		return
 	
 	transitioning = true
 	
 	$AnimationPlayer.play("Swipe to Black")
+	
+	# reset
+	current_wind_orb = null
+	wind_status = Vector2()
+	
 	scene_file_path = scene_path
 
 func get_player_position() -> Vector2:
@@ -51,6 +85,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		call_deferred("_deferred_load_scene", scene_file_path)
 	
 	if(anim_name == "Swipe To Scene"):
+		
 		transitioning = false
 		
 func _deferred_load_scene(path):
