@@ -1,25 +1,64 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/PlayerFrames.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/player.gd" type="Script" id=2]
+[ext_resource path="res://scripts/DustEmitter.gd" type="Script" id=3]
+[ext_resource path="res://scripts/SquashStretch.gd" type="Script" id=4]
+[ext_resource path="res://scripts/AnimatePlayer.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 6 )
+extents = Vector2( 5.5, 7 )
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.00403226, 0.739247, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Squash"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.4 ),
+"transitions": PoolRealArray( 1, 0.32768, 5.27803 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.436, 0.694 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Stretch"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.4 ),
+"transitions": PoolRealArray( 0.329877, 1, 2.14355 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.684, 1.412 ), Vector2( 1, 1 ) ]
+}
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 8.9407e-08, 1.19209e-07 )
-scale = Vector2( 0.09375, 0.15625 )
+position = Vector2( 0, 7 )
 frames = ExtResource( 1 )
+animation = "Idle"
+playing = true
+offset = Vector2( 0, -9 )
+script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.5, -1 )
 shape = SubResource( 1 )
 
 [node name="Raycasts" type="Node2D" parent="."]
@@ -33,12 +72,12 @@ enabled = true
 cast_to = Vector2( 0, 7 )
 
 [node name="Downright" type="RayCast2D" parent="Raycasts"]
-position = Vector2( 4, 0 )
+position = Vector2( 5, 0 )
 enabled = true
 cast_to = Vector2( 0, 7 )
 
 [node name="Downleft" type="RayCast2D" parent="Raycasts"]
-position = Vector2( -4, 0 )
+position = Vector2( -6, 0 )
 enabled = true
 cast_to = Vector2( 0, 7 )
 
@@ -50,12 +89,17 @@ cast_to = Vector2( -7, 0 )
 enabled = true
 cast_to = Vector2( 7, 0 )
 
-[node name="Dust2" type="CPUParticles2D" parent="."]
-position = Vector2( 0, 5 )
+[node name="DustEmitter" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Dust" type="CPUParticles2D" parent="DustEmitter"]
+position = Vector2( 0, 9 )
 emitting = false
-amount = 16
+amount = 20
+lifetime = 0.75
 one_shot = true
 explosiveness = 1.0
+lifetime_randomness = 0.5
 local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 3, 1 )
@@ -66,12 +110,14 @@ initial_velocity = 10.0
 initial_velocity_random = 0.72
 color_ramp = SubResource( 2 )
 
-[node name="Dust" type="CPUParticles2D" parent="."]
-position = Vector2( 0, 5 )
+[node name="Dust2" type="CPUParticles2D" parent="DustEmitter"]
+position = Vector2( 0, 9 )
 emitting = false
-amount = 16
+amount = 20
+lifetime = 0.75
 one_shot = true
 explosiveness = 1.0
+lifetime_randomness = 0.5
 local_coords = false
 emission_shape = 2
 emission_rect_extents = Vector2( 3, 1 )
@@ -81,3 +127,14 @@ gravity = Vector2( 0, 3 )
 initial_velocity = 10.0
 initial_velocity_random = 0.72
 color_ramp = SubResource( 2 )
+
+[node name="SquashStretch" type="AnimationPlayer" parent="."]
+anims/Squash = SubResource( 3 )
+anims/Stretch = SubResource( 4 )
+script = ExtResource( 4 )
+
+[connection signal="animate" from="." to="AnimatedSprite" method="_on_animate"]
+[connection signal="jump" from="." to="DustEmitter" method="_on_jump"]
+[connection signal="jump" from="." to="SquashStretch" method="_on_jump"]
+[connection signal="land" from="." to="DustEmitter" method="_on_land"]
+[connection signal="land" from="." to="SquashStretch" method="_on_land"]
