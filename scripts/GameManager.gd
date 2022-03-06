@@ -38,11 +38,6 @@ func _process(_delta):
 			if(death_timer > DEATH_TIME):
 				load_scene(scene_file_path)
 
-func _input(event):
-	if(event is InputEventKey):
-		if(event.pressed && event.scancode == KEY_U):
-			load_scene("res://scenes/Testing environment.tscn")
-
 func register_player(player_node : Node2D) -> void:
 	player = player_node
 	

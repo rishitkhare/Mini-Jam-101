@@ -26,6 +26,7 @@ signal animate(input, velocity, grounded)
 onready var frozen : bool = false
 onready var velocity : Vector2 = Vector2()
 onready var grounded : bool = false
+onready var riding : Object = null
 
 onready var frames_since_last_jump_press : int = 1000
 onready var frames_since_last_grounded : int = 1000
@@ -47,18 +48,29 @@ onready var rc_right : RayCast2D = $Raycasts/Right
 func _ready():
 	GameManager.register_player(self)
 	
-	
-func _draw():
-	pass
-	#draw_rect(Rect2(-shape.shape.extents, shape.shape.extents * 2), Color.aqua, false)
-	
 func _physics_process(_delta):
 	if(!frozen):
 		platforming_code()
 
 func platforming_code():
+	var platform = rc_down.get_collider()
 	
-	apply_wind(GameManager.get_wind_value())
+	if(platform == null):
+		platform = rc_downleft.get_collider()
+		
+	if(platform == null):
+		platform = rc_downright.get_collider()
+		
+		
+	
+	if(platform != null && platform.is_in_group("Ridable")):
+		platform.is_riding = true
+		riding = platform
+	else:
+		if(riding != null):
+			velocity += riding.velocity
+			riding = null
+		apply_wind(GameManager.get_wind_value())
 	
 	var input : Vector2 = get_input()
 	

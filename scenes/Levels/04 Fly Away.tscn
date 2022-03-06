@@ -21,7 +21,7 @@ position = Vector2( -13, -56 )
 wind_direction = Vector2( 0, -7 )
 
 [node name="Power2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 50, -143 )
+position = Vector2( 40, -145 )
 rotation = 0.785398
 wind_direction = Vector2( 8, -6 )
 
@@ -60,6 +60,7 @@ wind_direction = Vector2( 16, 0 )
 
 [node name="Flag" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1454, -65 )
+frame = 3
 nextScene = "res://scenes/Title.tscn"
 
 [node name="TileMap" type="TileMap" parent="."]
