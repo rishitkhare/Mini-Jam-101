@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://art/clouds.png" type="Texture" id=1]
+[ext_resource path="res://Title.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Subheader.tres" type="DynamicFont" id=4]
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends TextureRect
+
+
+# CLOUDS 2
+
+func _process(delta):
+	rect_position += Vector2.RIGHT * delta * 6
+	if(rect_position.x > -200):
+		rect_position.x -= 544
+"
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureRect
+
+# CLOUDS 1
+
+
+
+func _process(delta):
+	rect_position += Vector2.RIGHT * delta * 25
+	if(rect_position.x > -200):
+		rect_position.x -= 544
+"
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -173.0
+margin_top = -14.0
+margin_right = 174.0
+margin_bottom = 178.0
+color = Color( 0.427451, 0.556863, 0.611765, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clouds2" type="TextureRect" parent="."]
+modulate = Color( 0.796078, 0.796078, 0.796078, 1 )
+margin_left = -283.0
+margin_top = 52.0
+margin_right = 942.0
+margin_bottom = 288.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clouds" type="TextureRect" parent="."]
+margin_left = -181.0
+margin_top = 108.0
+margin_right = 1044.0
+margin_bottom = 344.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -137.0
+margin_top = 25.0
+margin_right = 137.0
+margin_bottom = 100.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]The legend of Aeolus[/center]"
+text = "The legend of Aeolus"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -138.0
+margin_top = 152.0
+margin_right = 136.0
+margin_bottom = 173.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]- any key to play -[/center]"
+text = "- any key to play -"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 6, 89 )
+current = true
