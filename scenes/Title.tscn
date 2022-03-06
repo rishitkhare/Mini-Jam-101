@@ -11,7 +11,7 @@ script/source = "extends TextureRect
 # CLOUDS 2
 
 func _process(delta):
-	rect_position += Vector2.RIGHT * delta * 6
+	rect_position += Vector2.RIGHT * delta * -6
 	if(rect_position.x > -200):
 		rect_position.x -= 544
 "

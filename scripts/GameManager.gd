@@ -26,7 +26,18 @@ func _ready():
 	scene_file_path = get_tree().current_scene.filename
 
 func _process(_delta):
+	if(Input.is_key_pressed(KEY_R)):
+		load_scene(scene_file_path)
+	
+	
 	if(player != null && camera != null):
+		var oob = player.position.x > camera.limit_right
+		oob = oob || player.position.x < camera.limit_left
+		oob = oob || player.position.y < camera.limit_top
+	
+		if(oob):
+			load_scene(scene_file_path)
+		
 		if(player.position.y > camera.limit_bottom + 20 && death_timer == 0):
 			player.frozen = true
 			camera.shake(15,5)
@@ -47,8 +58,10 @@ func register_camera(camera_node : Camera2D) -> void:
 func freeze_player():
 	player.frozen = true
 	var sprite : AnimatedSprite = player.get_node("AnimatedSprite")
+	var squash_stretch : AnimationPlayer = player.get_node("SquashStretch")
 	sprite.speed_scale = 0
 	sprite.modulate = Color(255,255,255)
+	squash_stretch.play("Squash")
 
 func unfreeze_player():
 	player.frozen = false

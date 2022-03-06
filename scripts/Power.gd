@@ -54,3 +54,9 @@ func enable():
 func _on_wind_set(_new_wind_direction):
 	if(GameManager.current_wind_orb != self && collected):
 		enable()
+
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if(anim_name == "pop in"):
+		$AnimationPlayer.play("bob")

@@ -64,6 +64,7 @@ func platforming_code():
 		
 	
 	if(platform != null && platform.is_in_group("Ridable")):
+		print("riding")
 		platform.is_riding = true
 		riding = platform
 	else:
@@ -147,7 +148,8 @@ func do_y_movement(_input : Vector2) -> void:
 	grounded = new_grounded
 	
 	if(grounded):
-		velocity.y = 0
+		if(velocity.y > 0):
+			velocity.y = 0
 		frames_since_last_grounded = 0
 	else:
 		frames_since_last_grounded += 1

@@ -7,6 +7,7 @@
 extents = Vector2( 16, 12 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" groups=["Ridable"]]
+collision/safe_margin = 0.2
 script = ExtResource( 2 )
 
 [node name="CloudPlatform" type="Sprite" parent="."]
