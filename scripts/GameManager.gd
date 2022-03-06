@@ -1,6 +1,7 @@
 extends Node
 
-
+const DEATH_TIME = 20
+const WIND_BOOST = -90
 
 signal wind_set
 
@@ -17,9 +18,25 @@ var wind_status : Vector2 = Vector2()
 var player : Node2D
 var camera : Camera2D
 
+var death_timer = 0
+
 func _ready():
 	var root = get_tree().get_root()
 	current_scene = root.get_child(root.get_child_count() - 1)
+	scene_file_path = get_tree().current_scene.filename
+
+func _process(_delta):
+	if(player != null && camera != null):
+		if(player.position.y > camera.limit_bottom + 20 && death_timer == 0):
+			player.frozen = true
+			camera.shake(15,5)
+			death_timer += 1
+		
+		if(death_timer > 0):
+			death_timer += 1
+			
+			if(death_timer > DEATH_TIME):
+				load_scene(scene_file_path)
 
 func _input(event):
 	if(event is InputEventKey):
@@ -53,6 +70,8 @@ func get_wind_value() -> Vector2:
 func set_wind_value(new_direction : Vector2):
 	wind_status = new_direction
 	emit_signal("wind_set", wind_status)
+	if(Input.is_action_pressed("jump_key")):
+		player.velocity.y += WIND_BOOST
 
 func load_scene(scene_path : String):
 	if(transitioning):
@@ -66,10 +85,6 @@ func load_scene(scene_path : String):
 	transitioning = true
 	
 	$AnimationPlayer.play("Swipe to Black")
-	
-	# reset
-	current_wind_orb = null
-	wind_status = Vector2()
 	
 	scene_file_path = scene_path
 
@@ -89,6 +104,12 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		transitioning = false
 		
 func _deferred_load_scene(path):
+	# reset
+	current_wind_orb = null
+	wind_status = Vector2()
+	death_timer = 0
+	player = null
+	camera = null
 	current_scene.free()
 	
 	# load scene from files

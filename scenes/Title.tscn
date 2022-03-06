@@ -34,7 +34,7 @@ script/source = "extends Camera2D
 
 func _input(event):
 	if(event is InputEventKey):
-		GameManager.load_scene(\"res://scenes/Level 1.tscn\")
+		GameManager.load_scene(\"res://scenes/Levels/01 Upwards Tutorial.tscn\")
 "
 
 [node name="Node2D" type="Node2D"]
@@ -44,13 +44,12 @@ margin_left = -173.0
 margin_top = -14.0
 margin_right = 174.0
 margin_bottom = 178.0
-color = Color( 0.521569, 0.709804, 0.615686, 1 )
+color = Color( 0.784314, 0.905882, 0.784314, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Clouds2" type="TextureRect" parent="."]
-modulate = Color( 0.796078, 0.796078, 0.796078, 1 )
 margin_left = -283.0
 margin_top = 52.0
 margin_right = 942.0

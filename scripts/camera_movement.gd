@@ -2,7 +2,7 @@ extends Camera2D
 
 
 export var follow_factor_x : float = 0.08
-export var follow_factor_y : float = 0.08
+export var follow_factor_y : float = 0.1
 
 onready var unrounded_position = position
 

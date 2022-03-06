@@ -53,5 +53,4 @@ func enable():
 
 func _on_wind_set(_new_wind_direction):
 	if(GameManager.current_wind_orb != self && collected):
-		print("enable")
 		enable()
