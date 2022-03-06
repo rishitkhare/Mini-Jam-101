@@ -7,6 +7,8 @@ const JUMP_GRAVITY = 2
 const GRAVITY = 10
 const TERMINAL_FALL_VEL = 170
 
+const SHAKE_THRESHOLD = 80
+
 const COYOTE_TIME_FRAMES = 10
 
 const PRE_JUMP_LEEWAY = 10
@@ -27,6 +29,7 @@ onready var grounded : bool = false
 onready var frames_since_last_jump_press : int = 1000
 onready var frames_since_last_grounded : int = 1000
 onready var frames_holding_jump_key : int = 0
+onready var falling_frames = 0
 
 onready var shape : CollisionShape2D = $CollisionShape2D
 
@@ -52,7 +55,7 @@ func _physics_process(_delta):
 	var input : Vector2 = get_input()
 	
 	if(Input.is_key_pressed(KEY_Z)):
-		apply_wind(Vector2(14, 0))
+		apply_wind(Vector2(21, 0))
 	
 		
 	count_frames()
@@ -110,6 +113,9 @@ func do_y_movement(_input : Vector2) -> void:
 	
 	if(velocity.y > TERMINAL_FALL_VEL):
 		velocity.y = TERMINAL_FALL_VEL
+		falling_frames += 1
+	else:
+		falling_frames = 0
 	
 	if(rc_up.is_colliding()):
 		velocity.y = GRAVITY
@@ -119,6 +125,8 @@ func do_y_movement(_input : Vector2) -> void:
 	
 	if(new_grounded && !grounded):
 		emit_signal("land")
+		if(velocity.y == TERMINAL_FALL_VEL && falling_frames > SHAKE_THRESHOLD):
+			GameManager.camera.shake(25, 4)
 	
 	grounded = new_grounded
 	

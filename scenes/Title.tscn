@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://art/clouds.png" type="Texture" id=1]
 [ext_resource path="res://Title.tres" type="DynamicFont" id=3]
@@ -29,6 +29,14 @@ func _process(delta):
 		rect_position.x -= 544
 "
 
+[sub_resource type="GDScript" id=4]
+script/source = "extends Camera2D
+
+func _input(event):
+	if(event is InputEventKey):
+		GameManager.load_scene(\"res://scenes/Testing environment.tscn\")
+"
+
 [node name="Node2D" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -36,7 +44,7 @@ margin_left = -173.0
 margin_top = -14.0
 margin_right = 174.0
 margin_bottom = 178.0
-color = Color( 0.427451, 0.556863, 0.611765, 1 )
+color = Color( 0.521569, 0.709804, 0.615686, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -105,3 +113,4 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 6, 89 )
 current = true
+script = SubResource( 4 )

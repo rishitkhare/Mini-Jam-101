@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://tilemap/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scripts/camera_movement.gd" type="Script" id=2]
@@ -6,6 +6,36 @@
 [ext_resource path="res://art/sky.png" type="Texture" id=4]
 [ext_resource path="res://art/wind.png" type="Texture" id=5]
 [ext_resource path="res://art/clouds.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade out"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,9 +45,9 @@ current = true
 script = ExtResource( 2 )
 
 [node name="wind_right" type="CPUParticles2D" parent="Camera2D"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -200, -20 )
 rotation = 1.5708
-emitting = false
 amount = 25
 lifetime = 1.4
 local_coords = false
@@ -28,23 +58,25 @@ flag_align_y = true
 direction = Vector2( 0, -1 )
 spread = 0.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 400.0
+initial_velocity = 586.75
 linear_accel = -19.27
 
-[node name="wind_up" type="CPUParticles2D" parent="Camera2D"]
-visible = false
-position = Vector2( 0, 140 )
-amount = 35
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/wind_right"]
+"anims/fade in" = SubResource( 1 )
+"anims/fade out" = SubResource( 2 )
+
+[node name="dust" type="CPUParticles2D" parent="Camera2D"]
+amount = 30
+lifetime = 4.61
 local_coords = false
-texture = ExtResource( 5 )
 emission_shape = 2
-emission_rect_extents = Vector2( 160, 20 )
-flag_align_y = true
-direction = Vector2( 0, -1 )
-spread = 0.0
+emission_rect_extents = Vector2( 170, 100 )
+spread = 180.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 400.0
-linear_accel = -19.27
+initial_velocity = 9.0
+initial_velocity_random = 0.16
+hue_variation = -0.94
+hue_variation_random = 1.0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
