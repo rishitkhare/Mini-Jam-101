@@ -31,7 +31,7 @@ func _process(_delta):
 	
 	
 	if(player != null && camera != null):
-		var oob = player.position.x > camera.limit_right
+		var oob = player.position.x > camera.limit_right + 20
 		oob = oob || player.position.x < camera.limit_left
 		oob = oob || player.position.y < camera.limit_top
 	
