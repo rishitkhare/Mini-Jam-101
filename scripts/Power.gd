@@ -30,6 +30,7 @@ func _process(_delta):
 			$Explode.restart()
 			GameManager.camera.shake(5, 3)
 			exploded = true
+			$Sounds/PSSH.play()
 
 func _on_Area2D_body_entered(body):
 	if(body.is_in_group("Player") && !collected):
@@ -39,6 +40,7 @@ func disable():
 	GameManager.current_wind_orb = self
 	GameManager.set_wind_value(wind_direction)
 	$Fire.emitting = false
+	$Sounds/Woom.play()
 	collected = true
 	GameManager.freeze_player()
 

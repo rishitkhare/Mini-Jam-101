@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/PlayerFrames.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/player.gd" type="Script" id=2]
 [ext_resource path="res://scripts/DustEmitter.gd" type="Script" id=3]
 [ext_resource path="res://scripts/SquashStretch.gd" type="Script" id=4]
 [ext_resource path="res://scripts/AnimatePlayer.gd" type="Script" id=5]
+[ext_resource path="res://Sounds/jump.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/landing.wav" type="AudioStream" id=7]
+[ext_resource path="res://Sounds/Footsteps.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/Hard landing.wav" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 7 )
@@ -51,7 +55,25 @@ script = ExtResource( 2 )
 
 [node name="Sounds" type="Node2D" parent="."]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Jump" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 6 )
+volume_db = -23.181
+pitch_scale = 0.77
+
+[node name="Land" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 7 )
+volume_db = -19.245
+
+[node name="HardLand" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 9 )
+volume_db = -11.852
+pitch_scale = 0.62
+
+[node name="Footstep" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 8 )
+volume_db = -80.0
+pitch_scale = 1.11
+autoplay = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 7 )

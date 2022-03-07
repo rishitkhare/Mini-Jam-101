@@ -64,7 +64,6 @@ func platforming_code():
 		
 	
 	if(platform != null && platform.is_in_group("Ridable")):
-		print("riding")
 		platform.is_riding = true
 		riding = platform
 	else:
@@ -106,6 +105,11 @@ func get_input() -> Vector2:
 	return input.normalized()
 	
 func do_x_movement(input : Vector2) -> void:
+	if(input.x != 0 && grounded):
+		$Sounds/Footstep.volume_db = -30
+	else:
+		$Sounds/Footstep.volume_db = -99
+	
 	velocity.x += input.x * HORIZONTAL_ACCEL
 	if(grounded):
 		velocity.x *= HORIZONTAL_DECEL
@@ -144,6 +148,9 @@ func do_y_movement(_input : Vector2) -> void:
 		emit_signal("land")
 		if(velocity.y == TERMINAL_FALL_VEL && falling_frames > SHAKE_THRESHOLD):
 			GameManager.camera.shake(25, 4)
+			$Sounds/HardLand.play()
+		else:
+			$Sounds/Land.play()
 	
 	grounded = new_grounded
 	
@@ -161,6 +168,7 @@ func do_y_movement(_input : Vector2) -> void:
 			frames_holding_jump_key = 1
 			
 			emit_signal("jump")
+			$Sounds/Jump.play()
 			velocity.y = JUMP_POWER
 			frames_since_last_grounded = 2048
 			frames_since_last_jump_press = 2048

@@ -41,6 +41,7 @@ func _process(_delta):
 		if(player.position.y > camera.limit_bottom + 20 && death_timer == 0):
 			player.frozen = true
 			camera.shake(15,5)
+			$Death_sound.play()
 			death_timer += 1
 		
 		if(death_timer > 0):
@@ -82,6 +83,11 @@ func set_wind_value(new_direction : Vector2):
 		player.velocity.y += WIND_BOOST
 
 func load_scene(scene_path : String):
+	if(scene_path == "res://scenes/Title.tscn"):
+		MusicManager.fade_to_title()
+	else:
+		MusicManager.fade_to_game()
+	
 	if(transitioning):
 		return
 	

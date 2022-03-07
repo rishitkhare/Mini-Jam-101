@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Power.gd" type="Script" id=1]
 [ext_resource path="res://art/white_circle.png" type="Texture" id=2]
 [ext_resource path="res://art/Wind power.png" type="Texture" id=3]
+[ext_resource path="res://Sounds/Woom.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/pssh.wav" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=3]
 resource_name = "bob"
@@ -139,6 +141,16 @@ initial_velocity = 37.44
 initial_velocity_random = 0.25
 linear_accel = -36.67
 color_ramp = SubResource( 6 )
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Woom" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 4 )
+volume_db = -11.255
+
+[node name="PSSH" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 5 )
+volume_db = -19.209
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

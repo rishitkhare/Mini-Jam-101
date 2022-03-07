@@ -10,20 +10,21 @@ config_version=4
 
 [application]
 
-config/name="Mini- Jam- 101"
+config/name="The Legend of Aeolus"
 run/main_scene="res://scenes/Title.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 GameManager="*res://scenes/modular/GameManager.tscn"
+MusicManager="*res://scenes/modular/MusicManager.tscn"
 
 [display]
 
 window/size/width=320
 window/size/height=180
-window/size/test_width=854
-window/size/test_height=480
+window/size/test_width=640
+window/size/test_height=360
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Woom.wav-4f1df5e7dc76172722f9f27688b65570.sample"
+
+[deps]
+
+source_file="res://Sounds/Woom.wav"
+dest_files=[ "res://.import/Woom.wav-4f1df5e7dc76172722f9f27688b65570.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

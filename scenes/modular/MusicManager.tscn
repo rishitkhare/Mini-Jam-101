@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sounds/Music/Lost in the sky.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Sounds/Music/No Melody.mp3" type="AudioStream" id=2]
+[ext_resource path="res://scripts/MusicManager.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade to game"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 5.65686, 1 ),
+"update": 0,
+"values": [ -15.0, -80.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Game:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, -15.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade to title"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Title:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, -15.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Game:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.9 ),
+"transitions": PoolRealArray( 3.24901, 1 ),
+"update": 0,
+"values": [ -15.0, -80.0 ]
+}
+
+[node name="MusicManager" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Title" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+autoplay = true
+
+[node name="Game" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -80.0
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/fade to game" = SubResource( 1 )
+"anims/fade to title" = SubResource( 2 )

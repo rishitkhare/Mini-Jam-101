@@ -17,7 +17,6 @@ limit_bottom = 180
 
 [node name="Flag" parent="." instance=ExtResource( 4 )]
 position = Vector2( -411, -486 )
-frame = 3
 nextScene = "res://scenes/Levels/03 right up left up.tscn"
 
 [node name="Power" parent="." instance=ExtResource( 3 )]
